@@ -1,0 +1,19 @@
+# .gitignore
+# macOS
+.DS_Store
+.Trashes
+.Spotlight-V100
+.fseventsd
+*.swp
+._*.*
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# General
+*.log
+*.tmp
+*.bak
+*.cache
+Thumbs.db
