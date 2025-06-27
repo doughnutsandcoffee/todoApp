@@ -15,41 +15,66 @@
 
 </head>
 <body>
-
-    <header>
-        <nav class="navbar-container">
-            <h1>Todo App</h1>
-        </nav>
-    </header>
-
     <div class="container">
+        <header>
+            <!-- <nav class="navbar-container">
+                <h1 class="navbar-title">Todo App</h1>
+            </nav> -->
+
+            <!-- HERO SECTION -->
+            <section class="hero-section-container">
+                <h1 class="hero-section-heading">Todo App</h1>
+                <p class="hero-section-paragraph">remove this text after testing</p>
+            </section>
+        </header>
+
+
         <main class="main-container">
             
-            <form action="">
-                <input id="todo-input" type="text" placeholder="write anything and hit ennter to add" autocomplete="off">
+        <section class="app-container">
+            <form class="form-container" action="">
+                <input class="text-input" id="todo-input" type="text" placeholder="write anything and hit ennter to add" autocomplete="off">
                 <button id="add-btn" class="button add-button">ADD</button>
             </form>
 
             <ul id="todo-list-container">
-                <li class="todo-list-bullets">
+                <li class="todo-list-bullets-container">
                     <!-- checkbox works by: linking id == for -->
-                    <input type="checkbox" id="todo-1">
+                    <input class="text-input" type="checkbox" id="todo-1">
                     <label class="custom-checkbox" for="todo-1"><img src="images/check.svg" alt="checkbox"></label>
                     <label for="todo-1" class="todo-text">webdev project with html, css and js</label>
                     <button id="delete-btn" class="button delete-button"><img src="images/delete.svg" alt="delete"></button>
                 </li>
 
-                <li class="todo-list-bullets">
+                <li class="todo-list-bullets-container">
                     <!-- checkbox works by: linking id == for -->
-                    <input type="checkbox" id="todo-2">
+                    <input class="text-input" type="checkbox" id="todo-2">
                     <label class="custom-checkbox" for="todo-2"><img src="images/check.svg" alt="checkbox"></label>
                     <label for="todo-2" class="todo-text">webdev project with html, css and js</label>
                     <button id="delete-btn" class="button delete-button"><img src="images/delete.svg" alt="delete"></button>
                 </li>
             </ul>
+        </section>
 
         </main>
 
+        <footer class="footer-container">
+            <a href="index.html"><img class="logo-sm" src="images/todo-list.svg" alt="application logo"></a>
+            <ul class="social-icons-container">
+                <li><a href="https://www.instagram.com"><img class="social-icons" src="images/instagram.svg" alt="instagram logo"></a></li>
+                <li><a href="https://www.facebook.com"><img class="social-icons" src="images/facebook.svg" alt="facebook logo"></a></li>
+                <li><a href="https://www.tiktok.com"><img class="social-icons" src="images/tiktok.svg" alt="tiktok logo"></a></li>
+                <li><a href="https://www.linkedin.com"><img class="social-icons" src="images/linkedin.svg" alt="linkedin logo"></a></li>
+                <li><a href="https://www.youtube.com"><img class="social-icons" src="images/youtube.svg" alt="youtube logo"></a></li>
+            </ul>
+        
+            <ul class="footer-links-container">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+            <p class="small-text">Made with <span class="heart-icon">♥︎</span> in London</p>
+        </footer>
     </div>
 
     <!-- Javascript (must be loaded at end) -->
