@@ -190,17 +190,24 @@ ul {
     width: 4rem;
 }
 
+/* Application logo */
 .logo-sm {
+    background-color: var(--tertiary-base);
     width: 2rem;
 }
 
 /* -------------------------------------- COMPONENTS --------------------------------------  */
 
+/* .button {
+    margin: 0.5rem 2rem;
+    padding: 0.5rem 2rem;
+} */
+
 /* FINALIZE THIS LATER ... just to make sure we have some values set */
 /* trash can icon */
 .delete-button {
     padding: 0rem;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
 }
 
 /* --------------------------------------- SECTIONS ---------------------------------------  */
@@ -217,12 +224,12 @@ ul {
     align-items: center;
 
     border: 0.25rem solid var(--primary-shade);
-    margin-bottom: 5rem;    
+    /* margin-bottom: 1rem;     */
 }
 
 .hero-section-heading {
-    margin-bottom: 1rem;
     color: var(--tertiary-base);
+    /* margin-bottom: 1rem;     */
 }
 
 /* ------------------------------- TODO SECTION -------------------------------  */
@@ -233,68 +240,46 @@ ul {
   }
 
 /* #todo-input (tutorial) */
+/* GET USER INPUT DATA */
 .form-container {
     color: var(--grey-tint);
     caret-color: var(--tertiary-base); /* cursor color */
-    background-color: var(--white); /* illusion input 1-with-add-button*/
+    background-color: var(--white); /* illusion input 1-container-with-add-button, typing contnent "overflows" */
 
     display: flex;
     flex-direction: row;
-    /* justify-content: space-evenly;
-    align-items: center; */
-    /* gap: 2rem; */
+    justify-content: space-between; /* added todo-input and button position on opposite sides */
+    /* align-items: center; */
 
-    /* border: 0.1rem solid var(--secondary-base); */
     border: none;
     border-radius: 2rem;
-    /* width: 80%; */
+    width: 80%; /* added so width todo-input = width of todo-content */
     margin: 2rem auto;
-    /* padding: 0.5rem 2rem;     */
 }
 
 #todo-input {
-    /* width: 100%;
-    height: 100%; */
     border: none;
     border-radius: 2rem;
-    text-align: center;
-    /* background-color: var(--primary-shade); */
-    /* background-color: transparent; */
+    text-align: center; /* align placeholder text */
+    background-color: transparent;
+    width: 90%; /* added so width todo-input = width of todo-content */
 }
 
 #todo-input:focus {
     outline: none; /* remove - browser default highliting of text field */
 }
 
-/* change starting position of absolute to, form element */
-/* form {
-    position: relative;
-} */
-
-/* starting from upper right hand corner of form element */
 #add-btn {
-    /* position: absolute; 
-    top: 0px;
-    right: 0px; */
-    /* position: absolute;
-    top: 50%;
-    right: 0px;
-    transform: translateY(-50%); */
-
     background-color: var(--tertiary-base);
     color: var(--primary-shade);
-    font: inherit;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--line-spacing-normal);
     cursor: pointer;
 
-    /* border: 0.05rem solid var(--secondary-base); */
     border: none;
     border-radius: 2rem;
     padding: 0.5rem 1rem;
-    /* height: 100%; fit input */
 }
 
+/* CONTENT GENERATED FROM USER INPUT */
 .todo-list-bullets-container {
     display: flex;
     flex-direction: row;
@@ -304,7 +289,7 @@ ul {
 
     /* border: 0.25rem solid var(--secondary-tint); */
     width: 80%;
-    margin: 2rem auto;   
+    margin: 0.5rem auto;   
 }
 
 
@@ -328,6 +313,11 @@ ul {
     display: flex;
     gap: 1rem;
 }
+
+/* style not applying will fix later */
+/* .footer-links-text {
+    color: var(--tertiary-base);
+} */
 
 .social-icons {
     width: 20px;
