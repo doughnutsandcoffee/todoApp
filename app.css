@@ -197,6 +197,7 @@ ul {
 /* -------------------------------------- COMPONENTS --------------------------------------  */
 
 /* FINALIZE THIS LATER ... just to make sure we have some values set */
+/* trash can icon */
 .delete-button {
     padding: 0rem;
     border-radius: 0.25rem;
@@ -226,29 +227,37 @@ ul {
 
 /* ------------------------------- TODO SECTION -------------------------------  */
 
+.app-container {
+    display: flex;
+    flex-direction: column;
+  }
+
 /* #todo-input (tutorial) */
 .form-container {
     color: var(--grey-tint);
     caret-color: var(--tertiary-base); /* cursor color */
+    background-color: var(--white); /* illusion input 1-with-add-button*/
 
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    /* justify-content: space-evenly;
+    align-items: center; */
     /* gap: 2rem; */
 
     /* border: 0.1rem solid var(--secondary-base); */
-    border-radius: 10rem;
-    width: 80%;
+    border: none;
+    border-radius: 2rem;
+    /* width: 80%; */
     margin: 2rem auto;
     /* padding: 0.5rem 2rem;     */
 }
 
 #todo-input {
-    width: 100%;
-    height: 100%;
-    border-radius: 10rem;
+    /* width: 100%;
+    height: 100%; */
     border: none;
+    border-radius: 2rem;
+    text-align: center;
     /* background-color: var(--primary-shade); */
     /* background-color: transparent; */
 }
@@ -258,19 +267,19 @@ ul {
 }
 
 /* change starting position of absolute to, form element */
-form {
+/* form {
     position: relative;
-}
+} */
 
 /* starting from upper right hand corner of form element */
 #add-btn {
     /* position: absolute; 
     top: 0px;
     right: 0px; */
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     right: 0px;
-    transform: translateY(-50%);
+    transform: translateY(-50%); */
 
     background-color: var(--tertiary-base);
     color: var(--primary-shade);
@@ -280,9 +289,10 @@ form {
     cursor: pointer;
 
     /* border: 0.05rem solid var(--secondary-base); */
-    border-radius: 20rem;
+    border: none;
+    border-radius: 2rem;
     padding: 0.5rem 1rem;
-    height: 100%; /* fit input */
+    /* height: 100%; fit input */
 }
 
 .todo-list-bullets-container {
