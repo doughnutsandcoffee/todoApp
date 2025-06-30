@@ -1,0 +1,328 @@
+/* ----------------------------------------- GLOBAL STYLES ----------------------------------------- */
+/* (1a) UNIVERSAL RESET: reset default spacing and ensure box-sizing */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* (1b) RESET ROOT: font size for rem calculations (1rem = 10px) instead of 10px */
+html {
+    font-size: 62.5%; /* root element adjust to user browser settings x */
+}
+
+/* (2) GLOBAL VARAIBLES: */
+:root {
+    /* Font Sizes (12px, 13px, 14px, 15px, 16px, 20px, 24px, 32px, 40px, 48px, 62px) */
+    --font-size-sm: 1.2rem;   /* 12px */
+    --font-size-md: 1.3rem;   /* 13px */
+    --font-size-lg: 1.4rem;   /* 14px */
+    --font-size-xl: 1.5rem;   /* 15px */
+    --font-size-base: 1.6rem; /* 16px, base */
+    --font-size-p: 2.0rem;    /* 20px */
+    --font-size-h5: 2.4rem;   /* 24px */
+    --font-size-h4: 3.2rem;   /* 32px */
+    --font-size-h3: 4.0rem;   /* 40px */
+    --font-size-h2: 4.8rem;   /* 48px */
+    --font-size-h1: 6.2rem;   /* 62px */
+
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+
+    /* Letter Spacing */
+    --letter-spacing-normal: 0px;
+    --letter-spacing-tight: -1px;
+
+    /* Font Family */
+    --font-family: "Righteous", sans-serif;
+    
+    /* Colors */
+    --primary-base: #1C1D20; /* Night | PRIMARY: #1C1D20*/
+    --primary-tint: #70737A; /* Light Night */
+    --primary-shade: #101114; /* Dark Night | BACKGROUND: #101114 */
+    --secondary-base: #4A4D57; /* Meh Grey | SECONDARY-COLOR: #4A4D57 */
+    --secondary-tint: #B0B3BC; /* Light Meh Grey */
+    --secondary-tint-hsl: 357, 100%, 74%; /* to use w/opacity for wrong asnwers at end */
+    --secondary-shade: #1D1F23; /* Dark Meh Grey */
+    --tertiary-base: #00FFC4; /* Lime | ACCENT-COLOR: #00FFC4 */
+    --tertiary-tint: #B3FFED; /* Light Lime */
+    --tertiary-shade: #004D3B; /* Dark Lime */
+    --grey-base: #495057; /* Slate */
+    --grey-tint: #f1f3f5; /* Pebble | TEXT-COLOR: #F9F9F9 */
+    --grey-shade: #212529; /* Graphite */
+    --white: #ffffff; /* White */
+    --black: #000000; /* Black */
+
+    /* Shadows */
+    --shadow-black-15: hsla(244, 19%, 16%, 15%);
+    --shadow-black-20: hsla(244, 19%, 16%, 20%);
+    --shadow-black-25: hsla(244, 19%, 16%, 25%);
+    --shadow-black-30: hsla(244, 19%, 16%, 30%);
+    --shadow-black-35: hsla(244, 19%, 16%, 35%);
+    --shadow-black-45: hsla(244, 19%, 16%, 45%);
+    --shadow-black-50: hsla(244, 19%, 16%, 50%);
+
+    /* Border Radius */
+    --border-radius-md: 8px;
+    --border-radius-lg: 20px;
+
+    /* Spacing System */
+    --space-0: 0px;
+    --space-5: 5px;
+    --space-10: 10px;
+    --space-15: 15px;
+    --space-20: 20px;
+    --space-25: 25px;
+    --space-30: 30px;
+    --space-40: 40px;
+    --space-50: 50px;
+    --space-60: 60px;
+    --space-70: 70px;
+    --space-80: 80px;
+    --space-90: 90px;
+    --space-100: 100px;
+    --space-125: 125px;
+    --space-150: 150px;
+    --space-200: 200px;
+    --space-250: 250px;
+    --space-300: 300px;
+    --space-400: 400px;
+    --space-500: 500px;
+}
+
+/* (3) BODY STYLES: all child tags, inherit these text properties */
+body {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--grey-tint);
+    background-color: var(--primary-shade);
+}
+
+/* (4) RESPONSIVE CONTAINER: contains all content in body tag (includes header, main, footer) */
+.container {
+    max-width: 1200px; /* common laptop/desktop screen size, don't stretch to wide for larger screens*/
+    width: 70%; /* responsive on smaller screens */
+    margin: 2rem auto; /* specified top & bottom, auto left and right -> horizontally centers container */
+
+    /* temporary just to see border ... remove */
+    border: 0.25rem solid var(--secondary-base);
+}
+
+/* (5) REMAINING TYPOGRAPHY SETTINGS: headings, paragraphs/links, utility classes*/
+/* Headings */
+h1, h2, h3, h4, h5 {
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--grey-shade);
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
+h5 {
+    font-size: var(--font-size-h5);
+}
+
+/* Paragraphs and Links */
+p {
+    font-size: var(--font-size-p);
+}
+
+a {
+    text-decoration: none; /* removes default underline */
+    font-size: var(--font-size-base);
+    display: inline-block;
+    color: var(--grey-base);
+}
+
+a:hover {
+    color: var(--primary-base); /* Better UX with distinct hover state */
+}
+
+a:link, a:active, a:visited {
+    color: var(--grey-base);
+}
+
+/* Lists and Inline Elements */
+ul {
+    list-style: none; /* removes the bullets */
+}
+
+/* Utility Classes */
+.text-sm {
+    font-size: var(--font-size-sm);
+}
+
+.text-md {
+    font-size: var(--font-size-md);
+}
+
+.text-lg {
+    font-size: var(--font-size-lg);
+}
+
+.text-xl {
+    font-size: var(--font-size-xl);
+}
+
+.logo-md {
+    width: 4rem;
+}
+
+.logo-sm {
+    width: 2rem;
+}
+
+/* -------------------------------------- COMPONENTS --------------------------------------  */
+
+/* FINALIZE THIS LATER ... just to make sure we have some values set */
+.delete-button {
+    padding: 0rem;
+    border-radius: 0.25rem;
+}
+
+/* --------------------------------------- SECTIONS ---------------------------------------  */
+
+/* ---------------------------------- NAVBAR ----------------------------------  */
+
+/* ------------------------------- HERO SECTION -------------------------------  */
+.hero-section-container {
+    /* height: calc(100vh - var(--nav-height));
+    min-height: 400px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    border: 0.25rem solid var(--primary-shade);
+    margin-bottom: 5rem;    
+}
+
+.hero-section-heading {
+    margin-bottom: 1rem;
+    color: var(--tertiary-base);
+}
+
+/* ------------------------------- TODO SECTION -------------------------------  */
+
+/* #todo-input (tutorial) */
+.form-container {
+    color: var(--grey-tint);
+    caret-color: var(--tertiary-base); /* cursor color */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* gap: 2rem; */
+
+    /* border: 0.1rem solid var(--secondary-base); */
+    border-radius: 10rem;
+    width: 80%;
+    margin: 2rem auto;
+    /* padding: 0.5rem 2rem;     */
+}
+
+#todo-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 10rem;
+    border: none;
+    /* background-color: var(--primary-shade); */
+    /* background-color: transparent; */
+}
+
+#todo-input:focus {
+    outline: none; /* remove - browser default highliting of text field */
+}
+
+/* change starting position of absolute to, form element */
+form {
+    position: relative;
+}
+
+/* starting from upper right hand corner of form element */
+#add-btn {
+    /* position: absolute; 
+    top: 0px;
+    right: 0px; */
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+
+    background-color: var(--tertiary-base);
+    color: var(--primary-shade);
+    font: inherit;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--line-spacing-normal);
+    cursor: pointer;
+
+    /* border: 0.05rem solid var(--secondary-base); */
+    border-radius: 20rem;
+    padding: 0.5rem 1rem;
+    height: 100%; /* fit input */
+}
+
+.todo-list-bullets-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    /* border: 0.25rem solid var(--secondary-tint); */
+    width: 80%;
+    margin: 2rem auto;   
+}
+
+
+/* ------------------------------- FOOTER SECTION -------------------------------  */
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* 1rem = 10px */
+
+    border: 0.25rem solid var(--primary-shade);
+}
+
+.social-icons-container {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons {
+    width: 20px;
+}
+
+.heart-icon {
+    color: var(--secondary-base);
+}
