@@ -208,45 +208,44 @@ ul {
     padding: 0.5rem 2rem;
 } */
 
-/* FINALIZE THIS LATER ... just to make sure we have some values set */
 /* trash can icon */
-/* .delete-button {
-    padding: 0rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: var(--primary-tint);
-    color: inherit;
-}
-
-.delete-button .icon {
-    height: 2.4rem;
-    width: 2.4rem;
-    fill: var(--primary-shade);
-    transition: 200ms ease;
-}
-
-.delete-button:hover .icon use {
-    fill: var(--accent-base);
-} */
 .delete-button {
     width: 2.4rem;
     height: 2.4rem;
     background-color: var(--primary-tint);
-    -webkit-mask-image: url('images/delete.svg');
-    mask-image: url('images/delete.svg');
-    mask-repeat: no-repeat;
-    mask-size: contain;
-    border: none;
+    /* 
+        B/c <img> tag treats SVG as static image, CSS can't access SVG's internal <path> to change fill property
+            SVG's hardcoded fill blocked all CSS overrides -> no color change on hover
+            instead use CSS mask-image on <svg>
+
+        Scalable Vector Graphics (svg) - XML-based format for vector images, def shapes <path> rather than pixels, allowing scalability w/out quality loss
+            svg - canvas or container for the SVG, defines dimensions and coordinate system
+            path - defining a shape via coordinates and commands (e.g., lines, curves)
+            fill - color inside the shape (SVG or CSS property)
+            stroke - outline of the shape
+            viewBox - def coordinate system and visible area of SVG
+
+        mask-image: CSS property applies an image as a mask, 
+            opaque areas show element’s content (e.g., background color)
+            transparent areas hide it.
+
+        background-color: CSS property colors visible parts of masked SVG
+        
+        mask-image: applies the SVG as a mask to the <button> the svg's <path> is treated as the mask
+            treats SVG as a shape, not a full image
+                opaque areas let background-color show through
+                transparent parts of SVG don't allow background-color to be visible
+    */
+    mask-image: url('images/delete.svg'); /* get img - All other Browsers */
+    -webkit-mask-image: url('images/delete.svg'); /* get img - Safari */
     cursor: pointer;
-    transition: background-color 200ms ease;
+    transition: background-color 200ms ease;/* animates chg in background-color not-hover and hover */
   }
   
   .delete-button:hover {
     background-color: var(--accent-base);
   }
   
-
-
 /* --------------------------------------- SECTIONS ---------------------------------------  */
 
 /* ---------------------------------- NAVBAR ----------------------------------  */
@@ -281,20 +280,24 @@ ul {
 .form-container {
     color: var(--grey-tint);
     caret-color: var(--tertiary-base); /* cursor color */
-    background-color: var(--white); /* illusion input 1-container-with-add-button, typing contnent "overflows" */
+    background-color: var(--primary-shade);
+    /*background-color: var(--white);*/ /* illusion input 1-container-with-add-button, typing contnent "overflows" */
 
     display: flex;
     flex-direction: row;
     justify-content: space-between; /* added todo-input and button position on opposite sides */
     /* align-items: center; */
 
-    border: none;
+    /* border: none; */
+    border: 0.25rem solid var(--grey-base);
     border-radius: 2rem;
     width: 80%; /* added so width todo-input = width of todo-content */
+    padding: 0rem;
     margin: 2rem auto;
 }
 
 #todo-input {
+    color: var(--grey-base);
     border: none;
     border-radius: 2rem;
     text-align: center; /* align placeholder text */
@@ -307,13 +310,14 @@ ul {
 }
 
 #add-btn {
+    font-weight: var(--font-weight-bold);
     background-color: var(--tertiary-base);
     color: var(--primary-shade);
     cursor: pointer;
 
     border: none;
     border-radius: 2rem;
-    padding: 0.5rem 1rem;
+    padding: 1.15rem 2rem;
 }
 
 /* CONTENT GENERATED FROM USER INPUT */
@@ -327,7 +331,9 @@ ul {
 
     /* border: 0.25rem solid var(--secondary-tint); */
     width: 80%;
-    margin: 0.5rem auto;   
+    padding: 1rem;
+    margin: 0.5rem auto;
+    border-radius: 1rem;
 }
 
 
