@@ -242,10 +242,49 @@ ul {
     transition: background-color 200ms ease;/* animates chg in background-color not-hover and hover */
   }
   
-  .delete-button:hover {
+.delete-button:hover {
     background-color: var(--accent-base);
-  }
+}
   
+.custom-checkbox {
+    /* creo que transparent is not needed maybe b/c todo container bk-color is the same */
+    background-color: transparent;
+    transition: 200ms ease;
+
+    border: 0.1rem solid var(--tertiary-base);
+    border-radius: 50%;
+    min-height: 1rem; /* insure circle doesn't get downside "squished" */
+    min-width: 1rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* insure not squeezed by other flexboxes? */
+    cursor: pointer;
+    transition: background-color 200ms ease;
+}
+
+/* fill or highlight circle "alien green" when checked */
+input[type="checkbox"]:checked ~ .custom-checkbox{
+    background-color: var(--tertiary-base);
+}
+
+/* doesn't work/not necessary b/c bk-color is the same as container */
+/* input[type="checkbox"]:checked ~ .custom-checkbox svg {
+    fill: var(--tertiary-base);
+} */
+
+/* strike out .todo-text when checked */
+input[type="checkbox"]:checked ~ .todo-text{
+    text-decoration: line-through;
+    color: var(--secondary-base);
+}
+
+/* hide checkbox */
+input[type="checkbox"]{
+    display: none;
+}
+
 /* --------------------------------------- SECTIONS ---------------------------------------  */
 
 /* ---------------------------------- NAVBAR ----------------------------------  */
@@ -320,22 +359,30 @@ ul {
     padding: 1.15rem 2rem;
 }
 
-/* CONTENT GENERATED FROM USER INPUT */
+/* container for: checkbox, user input, delete button */
 .todo-list-bullets-container {
     background-color: var(--primary-base);
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     gap: 2rem;
 
     /* border: 0.25rem solid var(--secondary-tint); */
     width: 80%;
-    padding: 1rem;
+    padding: 0rem 1.25rem; /* !!! t/b = 0; so TEXT set's the height !!!! */
     margin: 0.5rem auto;
-    border-radius: 1rem;
+    border-radius: 2rem;
+    /* transition: 200ms ease; */
 }
 
+/* user input "text" inside each todo-list-bullets-container */
+.todo-list-bullets-container .todo-text {
+    padding: 1.25rem;
+    padding-right: 0rem; /* remove padding right of text, so text can take up all space available */
+    flex-grow: 1; /* todo-text in flexbox takes up 1=all remaining width-space, ?could use space-between on flexbox but text centered */
+    transition: background-color 200ms ease; /* text white to grey on checked */
+}
 
 /* ------------------------------- FOOTER SECTION -------------------------------  */
 
