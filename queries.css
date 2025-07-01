@@ -8,13 +8,15 @@
             mask-size: contain; mask-position: center; mask-repeat: no-repeat;
 
         checkbox no-mask used, set properties for <img>
+            set height and width in rems for img
+            set display to block
 
 
 
 */
 @media (max-width: 50rem) {
     html {
-        font-size: 35%; /* 31.25 3/4 of 62.5% where 10px = 1rem */ /* 46.875 3/4 of 62.5% where 10px = 1rem */   
+        font-size: 46.875%; /* 31.25 3/4 of 62.5% where 10px = 1rem */ /* 46.875 3/4 of 62.5% where 10px = 1rem */   
     }
 
     .container {
@@ -30,3 +32,4 @@
     }
     
 }
+
