@@ -1,0 +1,32 @@
+/* 
+    Small devices (mobile devices): 500px = 10px * 1rem = 50rem 
+    Decreased: root font-size
+    Increased: container widths
+
+    Set rems for height and width of icons used for delete button and checkbox 
+        delete button masked used, set properties (1 icon no repeats contained to alloted spaced)
+            mask-size: contain; mask-position: center; mask-repeat: no-repeat;
+
+        checkbox no-mask used, set properties for <img>
+
+
+
+*/
+@media (max-width: 50rem) {
+    html {
+        font-size: 35%; /* 31.25 3/4 of 62.5% where 10px = 1rem */ /* 46.875 3/4 of 62.5% where 10px = 1rem */   
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .form-container {
+        width: 90%;
+    }
+
+    .todo-list-bullets-container {
+        width: 90%;
+    }
+    
+}
