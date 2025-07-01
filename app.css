@@ -113,11 +113,11 @@ body {
 /* (4) RESPONSIVE CONTAINER: contains all content in body tag (includes header, main, footer) */
 .container {
     max-width: 1200px; /* common laptop/desktop screen size, don't stretch to wide for larger screens*/
-    width: 70%; /* responsive on smaller screens */
+    width: 80%; /* responsive on smaller screens */
     margin: 2rem auto; /* specified top & bottom, auto left and right -> horizontally centers container */
 
     /* temporary just to see border ... remove */
-    border: 0.25rem solid var(--secondary-base);
+    /* border: 0.25rem solid var(--secondary-base); */
 }
 
 /* (5) REMAINING TYPOGRAPHY SETTINGS: headings, paragraphs/links, utility classes*/
@@ -213,6 +213,9 @@ ul {
     width: 2.4rem;
     height: 2.4rem;
     background-color: var(--primary-tint);
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     /* 
         B/c <img> tag treats SVG as static image, CSS can't access SVG's internal <path> to change fill property
             SVG's hardcoded fill blocked all CSS overrides -> no color change on hover
@@ -236,8 +239,18 @@ ul {
                 opaque areas let background-color show through
                 transparent parts of SVG don't allow background-color to be visible
     */
+
+    /* ensure only 1 icon - centered - restricted placement */
     mask-image: url('images/delete.svg'); /* get img - All other Browsers */
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+
     -webkit-mask-image: url('images/delete.svg'); /* get img - Safari */
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    
     cursor: pointer;
     transition: background-color 200ms ease;/* animates chg in background-color not-hover and hover */
   }
@@ -246,7 +259,7 @@ ul {
     background-color: var(--accent-base);
 }
   
-.custom-checkbox {
+.custom-checkbox {    
     /* creo que transparent is not needed maybe b/c todo container bk-color is the same */
     background-color: transparent;
     transition: 200ms ease;
@@ -262,6 +275,12 @@ ul {
     flex-shrink: 0; /* insure not squeezed by other flexboxes? */
     cursor: pointer;
     transition: background-color 200ms ease;
+}
+
+.custom-checkbox img {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: block;
 }
 
 /* fill or highlight circle "alien green" when checked */
@@ -370,7 +389,7 @@ input[type="checkbox"]{
 
     /* border: 0.25rem solid var(--secondary-tint); */
     width: 80%;
-    padding: 0rem 1.25rem; /* !!! t/b = 0; so TEXT set's the height !!!! */
+    padding: 0rem 1.25rem; /* !!! t/b = 0; so TEXT set's the height 1.25/2.5 !!!! */
     margin: 0.5rem auto;
     border-radius: 2rem;
     /* transition: 200ms ease; */
@@ -411,7 +430,7 @@ input[type="checkbox"]{
 } */
 
 .social-icons {
-    width: 20px;
+    width: 2rem;
 }
 
 .heart-icon {
