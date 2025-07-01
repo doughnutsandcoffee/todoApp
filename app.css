@@ -59,6 +59,11 @@ html {
     --white: #ffffff; /* White */
     --black: #000000; /* Black */
 
+    /* Used for delete (trash can) on hover */
+    --accent-base: #E63410; /* Tomato-Red */
+    --accent-tint: #EB593C; /* Light Tomato-Red */
+    --accent-shade: #B8290D; /* Dark Tomato-Red */
+
     /* Shadows */
     --shadow-black-15: hsla(244, 19%, 16%, 15%);
     --shadow-black-20: hsla(244, 19%, 16%, 20%);
@@ -205,10 +210,42 @@ ul {
 
 /* FINALIZE THIS LATER ... just to make sure we have some values set */
 /* trash can icon */
-.delete-button {
+/* .delete-button {
     padding: 0rem;
+    border: none;
     border-radius: 0.5rem;
+    background-color: var(--primary-tint);
+    color: inherit;
 }
+
+.delete-button .icon {
+    height: 2.4rem;
+    width: 2.4rem;
+    fill: var(--primary-shade);
+    transition: 200ms ease;
+}
+
+.delete-button:hover .icon use {
+    fill: var(--accent-base);
+} */
+.delete-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    background-color: var(--primary-tint);
+    -webkit-mask-image: url('images/delete.svg');
+    mask-image: url('images/delete.svg');
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    border: none;
+    cursor: pointer;
+    transition: background-color 200ms ease;
+  }
+  
+  .delete-button:hover {
+    background-color: var(--accent-base);
+  }
+  
+
 
 /* --------------------------------------- SECTIONS ---------------------------------------  */
 
@@ -281,6 +318,7 @@ ul {
 
 /* CONTENT GENERATED FROM USER INPUT */
 .todo-list-bullets-container {
+    background-color: var(--primary-base);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
