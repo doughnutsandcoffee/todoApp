@@ -1,5 +1,4 @@
-/** 
- * @module TodoState * /
+/** @module TodoState */
 
 /**
  * Maintains the state of todo-related global variables.
