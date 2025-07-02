@@ -66,8 +66,8 @@ export function buildTodo(userInput){
     li.classList.add("todo-list-bullets-container");
 
     // input: <input class="text-input" type="checkbox" id="todo-1"> 
-    checkboxInput.id = `todo-${STATE.todoCount}`;   
     let checkboxInput = document.createElement("input");
+    checkboxInput.id = `todo-${STATE.todoCount}`; 
     checkboxInput.classList.add("text-input");
     checkboxInput.type = "checkbox";
     
