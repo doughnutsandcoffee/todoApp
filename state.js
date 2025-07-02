@@ -11,7 +11,7 @@ export const STATE = {
  * increments todo count and returns updated value.
  * @returns {number} Updated todo count.
  */
-export function getCount(){
+export function incrementCount(){
     // start at -1 ... increment first ++ ... return value 0 as first todo-0
     ++STATE.todoCount;
 }
