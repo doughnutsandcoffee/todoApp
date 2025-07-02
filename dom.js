@@ -8,8 +8,8 @@ export const DOM = {
     todoInput : document.getElementById("todo-input"),                  /** @type {HTMLElement} Todo text input. */
     todoListContainer : document.getElementById("todo-list-container"), /** @type {HTMLElement} Todo UL list element. */
 
-    addButton : document.querySelectorAll(".add-button"),               /** @type {HTMLButtonElement} Buttons to "add" no ToDo. */
-    deleteButton : document.querySelectorAll(".delete-button"),         /** @type {HTMLButtonElement} Buttons to "delete" ToDo. */
+    addButtons : document.querySelectorAll(".add-button"),               /** @type {HTMLButtonElement} Buttons to "add" no ToDo. */
+    deleteButtons : document.querySelectorAll(".delete-button"),         /** @type {HTMLButtonElement} Buttons to "delete" ToDo. */
 
     addButton : document.getElementById("add-btn"),                     /** @type {HTMLButtonElement} Button to "add" no ToDo. */
     deleteButton : document.getElementById("delete-btn"),               /** @type {HTMLButtonElement} Button to "delete" ToDo. */
