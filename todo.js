@@ -1,13 +1,13 @@
 /** @module Todo core application functionality */
 
 import { DOM } from "./dom.js";
-import { STATE, getCount } from "./state.js"
+import { STATE, incrementCount } from "./state.js"
 
 /** @type {string[]} */ 
 export let allTodos = [];
 
 /**
- * Creates event listener to handle form submission event created when user clicks "Add" button/hits "enter", after user input text"
+ * Creates event listener to handle form submission event created when user clicks "Add" button/hits "enter"
  * @param {SubmitEvent} e - The form submission event (applies to the listener callback).
  * @returns {void}
  */
@@ -23,19 +23,23 @@ export function handleAdd() {
         https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement#events
         The submit event fires when a form is submitted.
     */
-    //let userInput = ""; // need text outside function
+
     DOM.formContainer.addEventListener("submit", function(e) {
         e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to a server)
-        const userInput = DOM.todoInput.value.trim(); // only capture text on "submit" ... guessing b/c clear after
-        // console.log(`user Input: ${userInput}`);
+        const userInput = DOM.todoInput.value.trim(); // submit event - captures current user input text
         
+        // a: empty input
         if(!userInput) {
             alert("Please enter a todo!");
             return;
-        }
+
+        // b: valid input
+        } else {
         buildTodo(userInput);
-        deleteTodo();
+        // deleteTodo();
+        }
     })
+    deleteTodo();
 }
 
 /*
@@ -57,45 +61,43 @@ export function buildTodo(userInput){
     // allTodos.push(userInput);
     incrementCount();
 
+    // bullet: <li class="todo-list-bullets-container"></li>
     let li = document.createElement("li")
-    Object.assign(li, {className: "todo-list-bullets-container"});
-    // li.classList.add("todo-list-bullets-container");
+    li.classList.add("todo-list-bullets-container");
 
-    // classList.add("text-input"); returns undefined
+    // input: <input class="text-input" type="checkbox" id="todo-1"> 
+    checkboxInput.id = `todo-${STATE.todoCount}`;   
     let checkboxInput = document.createElement("input");
-    Object.assign(checkboxInput, {className: "text-input", type: "checkbox", id: `todo-${STATE.todoCount}`});
-    // checkboxInput.classList.add("text-input");
-    // checkboxInput.type = "checkbox";
-    // checkboxInput.id = `todo-${STATE.todoCount}`;
+    checkboxInput.classList.add("text-input");
+    checkboxInput.type = "checkbox";
     
-    let checkboxlabel = document.createElement("label");
-    Object.assign(checkboxlabel, {className: "custom-checkbox", htmlFor: `todo-${STATE.todoCount}`});
-    // checkboxLabel.classList.add("custom-checkbox");
-    // checkboxLabel.htmlFor = `todo-${STATE.todoCount}`;
+    // checkbox:  <label class="custom-checkbox" for="todo-1"><img src="images/check.svg" alt="checkbox"></label>
+    let checkboxLabel = document.createElement("label");
+    checkboxLabel.classList.add("custom-checkbox");
+    checkboxLabel.htmlFor = `todo-${STATE.todoCount}`;
 
     let imgCheckbox = document.createElement("img");
-    Object.assign(imgCheckbox, {src: "images/check.svg", alt: "checkbox"});
-    checkboxlabel.appendChild(imgCheckbox);
-    // imgCheckbox.src = "imgages/check.svg";
-    // imgCheckbox.alt = "checkbox";
-    // checkboxlabel.appendChild(imgCheckbox);
+    imgCheckbox.src = "images/check.svg";
+    imgCheckbox.alt = "checkbox";
+    checkboxLabel.appendChild(imgCheckbox);
     
-    let labelTodoText = document.createElement("label");
-    Object.assign(labelTodoText, {className: "todo-text", htmlFor: `todo-${STATE.todoCount}`});
-    // textLabel.classList.add("todo-text");
-    // textLabel.htmlFor = `todo-${STATE.todoCount}`;
+    // text <label>: <label for="todo-1" class="todo-text"><p>webdev project with html, css and js</p></label>
+    let textLabel = document.createElement("label");
+    textLabel.classList.add("todo-text");
+    textLabel.htmlFor = `todo-${STATE.todoCount}`;
     
     let todoText = document.createElement("p");
     todoText.textContent = userInput;
-    labelTodoText.appendChild(todoText);
+    textLabel.appendChild(todoText);
 
+    // button: <button id="delete-btn-1" class="delete-button" aria-label="Delete"></button>
     let deleteButton = document.createElement("button");
-    Object.assign(deleteButton, {id: `delete-btn-${STATE.todoCount}`, className: "delete-button", "aria-label": "Delete"});
-    // deleteButton.classList.add("delete-button");
-    // deleteButton.ariaLabel = "Delete";
-    // deleteButton.addEventListener("click", () => li.remove()); // add on-click for delete
+    deleteButton.id = `delete-btn-${STATE.todoCount}`;
+    deleteButton.classList.add("delete-button");
+    deleteButton.ariaLabel = "Delete";
+    deleteButton.addEventListener("click", () => li.remove()); // add on-click for delete
 
-    li.append(checkboxInput, checkboxlabel, labelTodoText, deleteButton);
+    li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
 
     DOM.formContainer.reset(); // all form elements reset: input, button
