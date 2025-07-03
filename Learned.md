@@ -36,3 +36,14 @@
 since checkbox is hidden (display: none in CSS), consider adding aria-hidden="true" 
 - if relying on the custom label for accessibility:
 - if the custom checkbox (checkboxLabel) fully handles accessibility.
+
+### 5. addEventListener
+- https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+    - addEventListener(type, listener, options){}
+        - string representing the event type to listen for
+        - object that receives a notification (an object that implements the Event interface) when an event of the specified type occurs.
+        - object that specifies characteristics about the event listener
+
+- https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement#events
+    - The submit event fires when a form is submitted.
+
