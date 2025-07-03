@@ -36,7 +36,6 @@ export function handleAdd() {
 
         e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to a server)
         const userInput = DOM.todoInput.value.trim(); // submit event - captures current user input text
-
         
         // a: empty input
         if(!userInput) {
@@ -46,13 +45,11 @@ export function handleAdd() {
         // b: valid input
         } else {
         buildTodo(userInput);
-        console.log(`${STATE.todoCount}: "submit" triggered`);
+        // console.log(`${STATE.todoCount}: "submit" triggered`);
         }
 
     });
-    console.log(`${STATE.todoCount}: handleAdd() initialized`);
-    //deleteTodo(); // 1-call
-
+    // console.log(`${STATE.todoCount}: handleAdd() initialized`);
 }
 
 /*
@@ -118,14 +115,15 @@ export function buildTodo(userInput){
 
 /**
  * Configures one-event-listener, to delete specifc todo, for all "li" tags (individual todo's created by user)
+ * @param {ClickEvent} e - The click event (applies to the listener callback).
  * @returns {void}
  */
 export function handleDelete(){
-    console.log(`${STATE.todoCount}: deleteTodo() initialized`);
+    // console.log(`${STATE.todoCount}: deleteTodo() initialized`);
     DOM.todoListContainer.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-button")) { // .target, ref. to the object onto which the event was dispatched.
-            console.log(`${STATE.todoCount}: Inside, removing <li>`);
+            // console.log(`${STATE.todoCount}: Inside, removing <li>`);
             e.target.closest("li").remove();
         }
-      });
+    });
 }
