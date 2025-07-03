@@ -7,7 +7,16 @@ import { STATE, incrementCount } from "./state.js"
 export let allTodos = [];
 
 /**
- * Creates event listener to handle form submission event created when user clicks "Add" button/hits "enter"
+ * driver function
+ * @returns {void}
+ */
+export function startTodo(){
+    handleAdd();
+    deleteTodo();
+}
+
+/**
+ * Configures an event listener to handle form submission event triggered when user, clicks "Add" button or presses "enter" key
  * @param {SubmitEvent} e - The form submission event (applies to the listener callback).
  * @returns {void}
  */
@@ -23,10 +32,11 @@ export function handleAdd() {
         https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement#events
         The submit event fires when a form is submitted.
     */
-
     DOM.formContainer.addEventListener("submit", function(e) {
+
         e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to a server)
         const userInput = DOM.todoInput.value.trim(); // submit event - captures current user input text
+
         
         // a: empty input
         if(!userInput) {
@@ -36,10 +46,13 @@ export function handleAdd() {
         // b: valid input
         } else {
         buildTodo(userInput);
-        // deleteTodo();
+        console.log(`${STATE.todoCount}: "submit" triggered`);
         }
-    })
-    deleteTodo();
+
+    });
+    console.log(`${STATE.todoCount}: handleAdd() initialized`);
+    //deleteTodo(); // 1-call
+
 }
 
 /*
@@ -100,7 +113,7 @@ export function buildTodo(userInput){
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
 
-    DOM.formContainer.reset(); // all form elements reset: input, button
+    DOM.formContainer.reset(); // reset form elements to default values: input, button
 }
 
 /**
@@ -108,9 +121,11 @@ export function buildTodo(userInput){
  * @returns {void}
  */
 export function deleteTodo(){
+    console.log(`${STATE.todoCount}: deleteTodo() initialized`);
     DOM.todoListContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-button")) {
-          e.target.closest("li").remove();
+        if (e.target.classList.contains("delete-button")) { // .target, ref. to the object onto which the event was dispatched.
+            console.log(`${STATE.todoCount}: Inside, removing <li>`);
+            e.target.closest("li").remove();
         }
       });
 }

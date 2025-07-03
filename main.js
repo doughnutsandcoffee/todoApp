@@ -1,8 +1,7 @@
-import { handleAdd } from "./todo.js";
+import { startTodo } from "./todo.js";
 
 function main (){
-
-    handleAdd();
+    startTodo();
 }
 
 main();
