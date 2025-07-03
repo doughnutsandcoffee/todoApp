@@ -1,10 +1,13 @@
 /** @module Todo core application functionality */
 
+// !!! create you own logic for saving todos in local storage that are not deleted by end of the session !!!
+
 import { DOM } from "./dom.js";
 import { STATE, incrementCount } from "./state.js"
 
 /** @type {string[]} */ 
-export let allTodos = [];
+// export let allTodos = [];
+// export let currentTodos = STATE.todoListContainer;
 
 /**
  * driver function
@@ -13,6 +16,8 @@ export let allTodos = [];
 export function startTodo(){
     handleAdd();
     handleDelete();
+    // console.log(`todoListContainer: ${currentTodos.toString}`);
+    // saveTodos();
 }
 
 /**
@@ -24,7 +29,7 @@ export function handleAdd() {
 
     DOM.formContainer.addEventListener("submit", function(e) {
 
-        e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to a server)
+        e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to server && reloads page)
         const userInput = DOM.todoInput.value.trim(); // submit event - captures current user input text
         
         // a: empty input
@@ -115,4 +120,30 @@ export function handleDelete(){
             e.target.closest("li").remove();
         }
     });
+}
+
+/**
+ * update using current li elements? like getByClassName("todo-list-bullets-container");
+ * @returns {void}
+ */
+export function updateTodos(){
+
+}
+
+/**
+ * save in server
+ * @returns {void}
+ */
+export function saveTodos(){
+    // const todoJSON = JSON.stringify(todoArray);
+    localStorage.setItem("test","saved-value");
+}
+
+/**
+ * save in server
+ * @returns {void}
+ */
+export function getTodos(){
+    // const todos = localStorage.getItem("todos") || "[]";
+    // returns JSON.parse(todos);
 }
