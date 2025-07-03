@@ -12,7 +12,7 @@ export let allTodos = [];
  */
 export function startTodo(){
     handleAdd();
-    deleteTodo();
+    handleDelete();
 }
 
 /**
@@ -108,7 +108,7 @@ export function buildTodo(userInput){
     deleteButton.id = `delete-btn-${STATE.todoCount}`;
     deleteButton.classList.add("delete-button");
     deleteButton.ariaLabel = "Delete";
-    deleteButton.addEventListener("click", () => li.remove()); // add on-click for delete
+    //deleteButton.addEventListener("click", () => li.remove()); // add on-click for delete
 
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
@@ -117,10 +117,10 @@ export function buildTodo(userInput){
 }
 
 /**
- * Establishes one-event-listener, to delete specifc todo, for all "li" tags (individual todo's created by user)
+ * Configures one-event-listener, to delete specifc todo, for all "li" tags (individual todo's created by user)
  * @returns {void}
  */
-export function deleteTodo(){
+export function handleDelete(){
     console.log(`${STATE.todoCount}: deleteTodo() initialized`);
     DOM.todoListContainer.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-button")) { // .target, ref. to the object onto which the event was dispatched.
