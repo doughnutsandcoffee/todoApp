@@ -47,3 +47,18 @@ since checkbox is hidden (display: none in CSS), consider adding aria-hidden="tr
 - https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement#events
     - The submit event fires when a form is submitted.
 
+
+
+What's the difference between live and not live collection in Javascript selectors?
+https://stackoverflow.com/questions/32486199/whats-the-difference-between-live-and-not-live-collection-in-javascript-selecto
+http://www.w3.org/TR/dom/#concept-collection
+document.getElementsByClassName()
+document.getElementsByTagName()
+document.getElementsByName()
+
+are live because they are observers of internal collections maintained by engines. That maintenance is not strictly required but is easy to achieve.
+
+document.querySelectorAll() 
+
+is not live because result gets computed each time you request it. Maintenance of live collection is too expensive as each modification (content, attributes, classes) of the DOM in this case will require re-evaluation of each element in the collection - O(N*M) task where N is the number of all elements in the DOM (worst case) and M number of active querySelectorAll() collections.   
+
