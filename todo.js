@@ -1,9 +1,5 @@
 /** @module Todo core application functionality */
-
-// !!! create you own logic for saving todos in local storage that are not deleted by end of the session !!!
-
 import { DOM } from "./dom.js";
-import { STATE, incrementCount } from "./state.js"
 
 /** @type {string[]} */ 
 export let todosArray = [];
@@ -61,23 +57,21 @@ export function handleAdd() {
  * @returns {void}
  */
 export function buildTodo(userInput){
-    // allTodos.push(userInput);
-    incrementCount();
 
     // bullet: <li class="todo-list-bullets-container"></li>
     let li = document.createElement("li")
     li.classList.add("todo-list-bullets-container");
 
     // input: <input class="text-input" type="checkbox" id="todo-1"> 
-    let checkboxInput = document.createElement("input");
-    checkboxInput.id = `todo-${STATE.todoCount}`; 
+    let checkboxInput = document.createElement("input"); 
+    checkboxInput.id = `todo-${Date.now()}`; 
     checkboxInput.classList.add("text-input");
     checkboxInput.type = "checkbox";
     
     // checkbox:  <label class="custom-checkbox" for="todo-1"><img src="images/check.svg" alt="checkbox"></label>
     let checkboxLabel = document.createElement("label");
     checkboxLabel.classList.add("custom-checkbox");
-    checkboxLabel.htmlFor = `todo-${STATE.todoCount}`;
+    checkboxLabel.htmlFor = `todo-${Date.now()}`;
 
     let imgCheckbox = document.createElement("img");
     imgCheckbox.src = "images/check.svg";
@@ -87,7 +81,7 @@ export function buildTodo(userInput){
     // text <label>: <label for="todo-1" class="todo-text"><p>webdev project with html, css and js</p></label>
     let textLabel = document.createElement("label");
     textLabel.classList.add("todo-text");
-    textLabel.htmlFor = `todo-${STATE.todoCount}`;
+    textLabel.htmlFor = `todo-${Date.now()}`;
     
     let todoText = document.createElement("p");
     todoText.textContent = userInput;
@@ -95,7 +89,7 @@ export function buildTodo(userInput){
 
     // button: <button id="delete-btn-1" class="delete-button" aria-label="Delete"></button>
     let deleteButton = document.createElement("button");
-    deleteButton.id = `delete-btn-${STATE.todoCount}`;
+    deleteButton.id = `delete-btn-${Date.now()}`;
     deleteButton.classList.add("delete-button");
     deleteButton.ariaLabel = "Delete";
 
@@ -138,7 +132,7 @@ export function handleDelete(){
 export function internallyStoreTodo(todoText){
 
     const todo = {
-        "id" : Date.now(),
+        "id" : `todo-${Date.now()}`,
         "text" : todoText,
         "checkboxState" : false,
     }
