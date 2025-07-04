@@ -6,18 +6,16 @@ import { DOM } from "./dom.js";
 import { STATE, incrementCount } from "./state.js"
 
 /** @type {string[]} */ 
-// export let allTodos = [];
-// export let currentTodos = STATE.todoListContainer;
+export let todosArray = [];
 
 /**
  * driver function
  * @returns {void}
  */
 export function startTodo(){
+    loadTodos();
     handleAdd();
     handleDelete();
-    // console.log(`todoListContainer: ${currentTodos.toString}`);
-    // saveTodos();
 }
 
 /**
@@ -104,6 +102,9 @@ export function buildTodo(userInput){
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
 
+    internallyStoreTodo(todoText); // internal array updated
+    saveTodos(); // call save form cleared
+
     DOM.formContainer.reset(); // reset form elements to default values: input, button
 }
 
@@ -119,31 +120,57 @@ export function handleDelete(){
             // console.log(`${STATE.todoCount}: Inside, removing <li>`);
             e.target.closest("li").remove();
         }
+
+        //e.target.closest("li").id
+        //not sure how to do this b/c id is Date.now != todo-STATE.todoCount
+        //internallyRemoveTodo()
     });
 }
 
+// INTERNAL STORAGE
+
 /**
- * update using current li elements? like getByClassName("todo-list-bullets-container");
+ * Update internal todosArray by pushing an object with the id, text, and checkboxState of user's most recently added todo
+ * @param { string } todoText - The user-entered todo text.
  * @returns {void}
  */
-export function updateTodos(){
+export function internallyStoreTodo(todoText){
 
+    const todo = {
+        "id" : Date.now(),
+        "text" : todoText,
+        "checkboxState" : false,
+    }
+
+    todosArray.push(todo);
 }
 
 /**
- * save in server
+ * Update internal todosArray by removing an object with the matching id of the todo associated with user's most recently delete event
+ * @param { string } id - The user-entered todo text.
+ * @returns {void}
+ */
+export function internallyRemoveTodo(id){
+    console.log("inside internallyRemoveTodo");
+}
+
+// LOCAL STORAGE
+
+/**
+ * Store the todosArray in local storage by converting (serializing) the array of JSON objects into a flat string
  * @returns {void}
  */
 export function saveTodos(){
-    // const todoJSON = JSON.stringify(todoArray);
-    localStorage.setItem("test","saved-value");
+    const todosJSON = JSON.stringify(todosArray);
+    localStorage.setItem("saved-todos", todosJSON);
 }
 
 /**
- * save in server
- * @returns {void}
+ * Retrieve the todos from local storage by converting (parsing) the flat string into an array of JSON objects 
+ * @returns {Array} JSON.parse(todos) - array of todo JSON objects
  */
-export function getTodos(){
-    // const todos = localStorage.getItem("todos") || "[]";
-    // returns JSON.parse(todos);
+export function loadTodos(){
+    // still need to add a call to buildTodos() ???
+    const todos = localStorage.getItem("saved-todos") || "[]";
+    return JSON.parse(todos);
 }
