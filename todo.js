@@ -124,6 +124,7 @@ export function handleDelete(){
         //e.target.closest("li").id
         //not sure how to do this b/c id is Date.now != todo-STATE.todoCount
         //internallyRemoveTodo()
+        //deleteTodo() or saveTodos()
     });
 }
 
