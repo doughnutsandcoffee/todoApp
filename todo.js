@@ -57,21 +57,23 @@ export function handleAdd() {
  * @returns {void}
  */
 export function buildTodo(userInput){
+    const timestamp = Date.now(); // ensure all elements for ea. unique todo share same timestamp, before called separately for each child element
 
     // bullet: <li class="todo-list-bullets-container"></li>
     let li = document.createElement("li")
     li.classList.add("todo-list-bullets-container");
+    li.id = `${timestamp}`;
 
     // input: <input class="text-input" type="checkbox" id="todo-1"> 
     let checkboxInput = document.createElement("input"); 
-    checkboxInput.id = `todo-${Date.now()}`; 
+    checkboxInput.id = `todo-${timestamp}`; 
     checkboxInput.classList.add("text-input");
     checkboxInput.type = "checkbox";
     
     // checkbox:  <label class="custom-checkbox" for="todo-1"><img src="images/check.svg" alt="checkbox"></label>
     let checkboxLabel = document.createElement("label");
     checkboxLabel.classList.add("custom-checkbox");
-    checkboxLabel.htmlFor = `todo-${Date.now()}`;
+    checkboxLabel.htmlFor = `todo-${timestamp}`;
 
     let imgCheckbox = document.createElement("img");
     imgCheckbox.src = "images/check.svg";
@@ -81,7 +83,7 @@ export function buildTodo(userInput){
     // text <label>: <label for="todo-1" class="todo-text"><p>webdev project with html, css and js</p></label>
     let textLabel = document.createElement("label");
     textLabel.classList.add("todo-text");
-    textLabel.htmlFor = `todo-${Date.now()}`;
+    textLabel.htmlFor = `todo-${timestamp}`;
     
     let todoText = document.createElement("p");
     todoText.textContent = userInput;
@@ -89,15 +91,15 @@ export function buildTodo(userInput){
 
     // button: <button id="delete-btn-1" class="delete-button" aria-label="Delete"></button>
     let deleteButton = document.createElement("button");
-    deleteButton.id = `delete-btn-${Date.now()}`;
+    deleteButton.id = `delete-btn-${timestamp}`;
     deleteButton.classList.add("delete-button");
     deleteButton.ariaLabel = "Delete";
 
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
 
-    internallyStoreTodo(todoText); // internal array updated
-    saveTodos(); // call save form cleared
+    internallyStoreTodo(todoText.textContent, timestamp); // internal array updated
+    writeToLocalStorage();
 
     DOM.formContainer.reset(); // reset form elements to default values: input, button
 }
@@ -108,17 +110,17 @@ export function buildTodo(userInput){
  * @returns {void}
  */
 export function handleDelete(){
-    // console.log(`${STATE.todoCount}: deleteTodo() initialized`);
-    DOM.todoListContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-button")) { // .target, ref. to the object onto which the event was dispatched.
-            // console.log(`${STATE.todoCount}: Inside, removing <li>`);
-            e.target.closest("li").remove();
-        }
 
-        //e.target.closest("li").id
-        //not sure how to do this b/c id is Date.now != todo-STATE.todoCount
-        //internallyRemoveTodo()
-        //deleteTodo() or saveTodos()
+    DOM.todoListContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("delete-button")) { // e.target is actual html element "clicked"
+            // 1. get parent id to, remove from array
+            const targetID = e.target.closest("li").id;
+            internallyRemoveTodo(targetID); 
+            
+            // 2. remove parent, update storage
+            e.target.closest("li").remove();
+            writeToLocalStorage(); // use internall array don't need to call localStorage.removeItem()
+        }
     });
 }
 
@@ -127,26 +129,25 @@ export function handleDelete(){
 /**
  * Update internal todosArray by pushing an object with the id, text, and checkboxState of user's most recently added todo
  * @param { string } todoText - The user-entered todo text.
+ * @param { string } timestamp - Timestamp todo originally created at.
  * @returns {void}
  */
-export function internallyStoreTodo(todoText){
-
+export function internallyStoreTodo(todoText, timestamp){
     const todo = {
-        "id" : `todo-${Date.now()}`,
+        "id" : `${timestamp}`, // added id to li ... match
         "text" : todoText,
         "checkboxState" : false,
     }
-
     todosArray.push(todo);
 }
 
 /**
- * Update internal todosArray by removing an object with the matching id of the todo associated with user's most recently delete event
+ * Creates new internal todosArray once remove object with the matching id of the targetID, todo corresponding to the most recent delete event
  * @param { string } id - The user-entered todo text.
  * @returns {void}
  */
-export function internallyRemoveTodo(id){
-    console.log("inside internallyRemoveTodo");
+export function internallyRemoveTodo(targetID){
+    todosArray = todosArray.filter(todo => todo.id !==targetID);
 }
 
 // LOCAL STORAGE
@@ -155,17 +156,75 @@ export function internallyRemoveTodo(id){
  * Store the todosArray in local storage by converting (serializing) the array of JSON objects into a flat string
  * @returns {void}
  */
-export function saveTodos(){
+export function writeToLocalStorage(){
     const todosJSON = JSON.stringify(todosArray);
-    localStorage.setItem("saved-todos", todosJSON);
+    localStorage.setItem("saved-todos", todosJSON); // updating storage b/c always us same key
 }
 
 /**
  * Retrieve the todos from local storage by converting (parsing) the flat string into an array of JSON objects 
  * @returns {Array} JSON.parse(todos) - array of todo JSON objects
  */
-export function loadTodos(){
-    // still need to add a call to buildTodos() ???
-    const todos = localStorage.getItem("saved-todos") || "[]";
-    return JSON.parse(todos);
+
+export function loadTodos(){ 
+    const todosJsonArray = retrieveTodosFromLocalStorage();
+    todosJsonArray.forEach(todo => renderTodos(todo));
+}
+
+/**
+ * Retrieve the todos from local storage by converting (parsing) the flat string into an array of JSON objects 
+ * @returns {Array} JSON.parse(todos_String) - array of todo JSON objects
+ */
+
+export function retrieveTodosFromLocalStorage(){ 
+    const todos_String = localStorage.getItem("saved-todos") || "[]";
+    const todosJsonArray = JSON.parse(todos_String);
+    return todosJsonArray;
+}
+
+/**
+ * Renders a single todo item from localStorage to the DOM.
+ * @param {Object} todo - Todo object with id, text, and checkboxState.
+ * @returns {void}
+ */
+export function renderTodos(todo) {
+    // Create <li class="todo-list-bullets-container"></li>
+    let li = document.createElement("li");
+    li.classList.add("todo-list-bullets-container");
+    li.id = todo.id;
+
+    // Create <input class="text-input" type="checkbox" id="todo-[id]">
+    let checkboxInput = document.createElement("input");
+    checkboxInput.id = `todo-${todo.id}`;
+    checkboxInput.classList.add("text-input");
+    checkboxInput.type = "checkbox";
+    checkboxInput.checked = todo.checkboxState; // Reflect stored state
+
+    // Create <label class="custom-checkbox" for="todo-[id]"><img src="images/check.svg" alt="checkbox"></label>
+    let checkboxLabel = document.createElement("label");
+    checkboxLabel.classList.add("custom-checkbox");
+    checkboxLabel.htmlFor = `todo-${todo.id}`;
+
+    let imgCheckbox = document.createElement("img");
+    imgCheckbox.src = "images/check.svg";
+    imgCheckbox.alt = "checkbox";
+    checkboxLabel.appendChild(imgCheckbox);
+
+    // Create <label for="todo-[id]" class="todo-text"><p>[text]</p></label>
+    let textLabel = document.createElement("label");
+    textLabel.classList.add("todo-text");
+    textLabel.htmlFor = `todo-${todo.id}`;
+
+    let todoText = document.createElement("p");
+    todoText.textContent = todo.text;
+    textLabel.appendChild(todoText);
+
+    // Create <button id="delete-btn-[id]" class="delete-button" aria-label="Delete"></button>
+    let deleteButton = document.createElement("button");
+    deleteButton.id = `delete-btn-${todo.id}`;
+    deleteButton.classList.add("delete-button");
+    deleteButton.ariaLabel = "Delete";
+
+    li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
+    DOM.todoListContainer.appendChild(li);
 }
