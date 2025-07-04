@@ -1,5 +1,8 @@
 /** @module Local storage operations for Todo application */
 
+import { renderTodo } from "./dom.js";
+import { todosArray } from "./state.js";
+
 /**
  * Store the todosArray in local storage by converting (serializing) the array of JSON objects into a flat string
  * @returns {void}
@@ -16,7 +19,7 @@ export function writeToLocalStorage(){
 
 export function loadTodos(){ 
     const todosJsonArray = retrieveTodosFromLocalStorage();
-    todosJsonArray.forEach(todo => renderTodos(todo));
+    todosJsonArray.forEach(todo => renderTodo(todo));
 }
 
 /**

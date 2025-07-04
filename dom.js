@@ -1,4 +1,7 @@
-/** @module DOM cache and manipulation for Todo application */
+/** @module DOM manipulation for Todo application */
+
+import { internallyStoreTodo } from "./state.js";
+import { writeToLocalStorage } from "./storage.js";
 
 /**
  * Caches frequently used HTML DOM elements to avoid repeated DOM queries for efficiency.
@@ -8,9 +11,8 @@
 
 export const DOM = {
     formContainer: document.querySelector(".form-container"),               /** @type {HTMLElement} Container for todo form tag. */
-    todoInput : document.getElementById("todo-input"),                      /** @type {HTMLElement} Input field for todo text. */
+    todoInput: document.getElementById("todo-input"),                      /** @type {HTMLInputElement} Input field for todo text. */
     todoListContainer : document.getElementById("todo-list-container"),     /** @type {HTMLElement} Unordered list element for todo items. */
-    // addButton : document.getElementById("add-btn"),                     /** @type {HTMLButtonElement} Button to "add" a todo. */
 }
 
 /**
@@ -71,7 +73,7 @@ export function buildTodo(userInput){
  * @param {Object} todo - Todo object with id, text, and checkboxState.
  * @returns {void}
  */
-export function renderTodos(todo) {
+export function renderTodo(todo) {
     // Create <li class="todo-list-bullets-container"></li>
     let li = document.createElement("li");
     li.classList.add("todo-list-bullets-container");

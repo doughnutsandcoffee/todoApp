@@ -1,5 +1,9 @@
 /** @module Event handling for Todo application */
 
+import { DOM, buildTodo } from "./dom.js";
+import {internallyRemoveTodo } from "./state.js";
+import { writeToLocalStorage } from "./storage.js";
+
 /**
  * Configures an event listener to handle form submission event triggered when user, clicks "Add" button or presses "enter" key
  * @param {SubmitEvent} e - The form submission event (applies to the listener callback).
