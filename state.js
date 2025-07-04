@@ -1,5 +1,8 @@
 /** @module Internal state management for Todo application */
 
+/** @type {Array<{id: string, text: string, checkboxState: boolean}>} */
+export let todosArray = [];
+
 /**
  * Update internal todosArray by pushing an object with the id, text, and checkboxState of user's most recently added todo
  * @param { string } todoText - The user-entered todo text.
