@@ -3,79 +3,22 @@
 import { DOM } from "./dom.js";
 /** @module DOM manipulation for Todo application */
 // import { DOM, buildTodo, renderTodos } from "./dom.js";
-/** @module Event handling for Todo application */
-// import { handleAdd, handleCheckbox, handleDelete } from "./handlers.js";
-/** @module Internal state management for Todo application */
-// import { internallyRemoveTodo, internallyStoreTodo, todosArray } from "./state.js";
-/** @module Local storage operations for Todo application */
-// import { loadTodos, retrieveTodosFromLocalStorage, writeToLocalStorage } from "./storage.js";
+import { handleAdd, handleCheckbox, handleDelete } from "./handlers.js";
+import { internallyRemoveTodo, internallyStoreTodo, todosArray } from "./state.js";
+import { loadTodos, writeToLocalStorage } from "./storage.js";
 
 /** @type {Array<{id: string, text: string, checkboxState: boolean}>} */
 export let todosArray = [];
 
 /**
- * Initializes the Todo application by loading todos from storage and setting up event handlers for adding and deleting todos.
+ * Initializes the Todo application by loading todos from storage and setting up event handlers.
  * @returns {void}
  */
 export function startTodo(){
     loadTodos();
     handleAdd();
+    handleCheckbox();
     handleDelete();
-    // handleCheckbox();
-}
-
-/* --------------------------------- handlers.js --------------------------------- */
-
-/**
- * Configures an event listener to handle form submission event triggered when user, clicks "Add" button or presses "enter" key
- * @param {SubmitEvent} e - The form submission event (applies to the listener callback).
- * @returns {void}
- */
-export function handleAdd() {
-    DOM.formContainer.addEventListener("submit", function(e) {
-        
-        e.preventDefault(); // prevents default browser action but not event propogation ("submit" - sumbits form to server && reloads page)
-        const userInput = DOM.todoInput.value.trim(); // submit event - captures current user input text
-        
-        // a: empty input
-        if(!userInput) {
-            alert("Please enter a todo!");
-            return;
-
-        // b: valid input
-        } else {
-        buildTodo(userInput);
-        }
-    });;
-}
-
-/**
- * @param {} xxxx - 
- * @param {ClickEvent} e -
- * @returns {void} -
- */
-export function handleCheckbox(){
-    console.log("handleCheckbox() called.")
-}
-
-/**
- * Configures one-event-listener, to delete specifc todo, for all "li" tags (individual todo's created by user)
- * @param {ClickEvent} e - The click event (applies to the listener callback).
- * @returns {void}
- */
-export function handleDelete(){
-
-    DOM.todoListContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-button")) { // e.target is actual html element "clicked"
-            // 1. get parent id to, remove from array
-            const targetID = e.target.closest("li").id;
-            internallyRemoveTodo(targetID); 
-            
-            // 2. remove parent, update storage
-            e.target.closest("li").remove();
-            writeToLocalStorage(); // use internall array don't need to call localStorage.removeItem()
-        }
-    });
 }
 
 /* --------------------------------- dom.js --------------------------------- */
@@ -178,62 +121,4 @@ export function renderTodos(todo) {
 
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
-}
-
-/* --------------------------------- state.js --------------------------------- */
-
-/**
- * Update internal todosArray by pushing an object with the id, text, and checkboxState of user's most recently added todo
- * @param { string } todoText - The user-entered todo text.
- * @param { string } timestamp - Timestamp todo originally created at.
- * @returns {void}
- */
-export function internallyStoreTodo(todoText, timestamp){
-    const todo = {
-        "id" : `${timestamp}`, // added id to li ... match
-        "text" : todoText,
-        "checkboxState" : false,
-    }
-    todosArray.push(todo);
-}
-
-/**
- * Creates new internal todosArray once remove object with the matching id of the targetID, todo corresponding to the most recent delete event
- * @param { string } id - The user-entered todo text.
- * @returns {void}
- */
-export function internallyRemoveTodo(targetID){
-    todosArray = todosArray.filter(todo => todo.id !==targetID);
-}
-
-/* --------------------------------- storage.js --------------------------------- */
-
-/**
- * Store the todosArray in local storage by converting (serializing) the array of JSON objects into a flat string
- * @returns {void}
- */
-export function writeToLocalStorage(){
-    const todosJSON = JSON.stringify(todosArray);
-    localStorage.setItem("saved-todos", todosJSON); // updating storage b/c always us same key
-}
-
-/**
- * Retrieve the todos from local storage by converting (parsing) the flat string into an array of JSON objects 
- * @returns {Array} JSON.parse(todos) - array of todo JSON objects
- */
-
-export function loadTodos(){ 
-    const todosJsonArray = retrieveTodosFromLocalStorage();
-    todosJsonArray.forEach(todo => renderTodos(todo));
-}
-
-/**
- * Retrieve the todos from local storage by converting (parsing) the flat string into an array of JSON objects 
- * @returns {Array} JSON.parse(todos_String) - array of todo JSON objects
- */
-
-export function retrieveTodosFromLocalStorage(){ 
-    const todos_String = localStorage.getItem("saved-todos") || "[]";
-    const todosJsonArray = JSON.parse(todos_String);
-    return todosJsonArray;
 }
