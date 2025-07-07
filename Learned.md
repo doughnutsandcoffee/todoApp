@@ -47,9 +47,16 @@ since checkbox is hidden (display: none in CSS), consider adding aria-hidden="tr
 - https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement#events
     - The submit event fires when a form is submitted.
 
+### 6. With and With out template literals
+- If you have an object:
+    - With template literal: string 
+        - console.log(`todo: ${todo}`);
+        - [object Object]   
+    - With Out template literal: value
+        - console.log("todo:", todo);
+        - {"id": "1751919833890","text": "todo00","checkboxState": true}
 
-
-### 6. What's the difference between live and not live collection in Javascript selectors?
+### 7. What's the difference between live and not live collection in Javascript selectors?
     https://stackoverflow.com/questions/32486199/whats-the-difference-between-live-and-not-live-collection-in-javascript-selecto
     http://www.w3.org/TR/dom/#concept-collection
     document.getElementsByClassName()
@@ -62,7 +69,7 @@ since checkbox is hidden (display: none in CSS), consider adding aria-hidden="tr
 
     is not live because result gets computed each time you request it. Maintenance of live collection is too expensive as each modification (content, attributes, classes) of the DOM in this case will require re-evaluation of each element in the collection - O(N*M) task where N is the number of all elements in the DOM (worst case) and M number of active querySelectorAll() collections.   
 
-### 7. Local Storage - data stored on your browser
+### 8. Local Storage - data stored on your browser
 - Resources:
     - [x][The Coding Train - Local Storage in JavaScript with p5.js](https://www.youtube.com/watch?v=_SRS8b4LcZ8)
     - [x][Chrome for Developers -  Storage for the web](https://www.youtube.com/watch?v=NNuTV-gjlZQ/)
@@ -166,3 +173,38 @@ since checkbox is hidden (display: none in CSS), consider adding aria-hidden="tr
     3. Convert to JSON: JSON.stringify(objectName)
     4. Store object in local storage using a key|value : localStorage.setItem("objectKey":"objectName")
     5. Retrieve: const storedTodo = JSON.parse(localStorage.getItem('todo'));
+
+### 9. Stringify does it all
+    - JSON.stringify(todosArray)
+        - Don't need to save objects as strings function does this already
+        - Unless you want to be save store all as strings for Type Safety, which is what I did
+        - b/c function inside buildTodo() to produce id's is of type number: const timestamp = Date.now();
+        - so:
+            export function internallyStoreTodo(timestamp, todoText, state){
+                const todo = {
+                    "id" : `${timestamp}`, // added id to li ... match
+                    "text" : todoText,
+                    "checkboxState" : state,
+                }
+                todosArray.push(todo);
+            }
+        - why needed to use template literal, to have accurate comparison and avoid undefined in handleCheckbox():
+            - const todo = todosArray.find(todo => todo.id === `${targetID}`);  
+
+### 10. Storage hole
+    - Fixed issues of disspearing todo's
+    - Added these lines at bottom of renderTodos(todo):     
+        - internallyStoreTodo(todo.id, todo.text, todo.checkboxState); 
+        - writeToLocalStorage();  
+    - loadTodos(): renders data from localStorage onto page
+    - Creates a hole b/c todosArray is never updated, like they never existed
+    - handleAdd(): user inputs data -> buildTodos(), todosArray updated -> used to overwrite to localStorage
+    - old todo's were never account for w/o adding lines to save them in renderTodos(todo)
+
+    - Now it works
+        - No need for writeToLocalStorage() in renderTodo: Unnecessary since it redundantly saves unchanged data.
+        - Page load: loadTodos() retrieves todos from localStorage, calling renderTodo for each.
+        - Storing in todosArray: renderTodo calls internallyStoreTodo, populating todosArray.
+        - Sync at load: todosArray and localStorage are synced after loadTodos().
+        - Adding todos: handleAdd() calls buildTodo, updating todosArray and calling writeToLocalStorage.
+        - Persistent storage: writeToLocalStorage in buildTodo saves todosArray (loaded + new todos) to localStorage.

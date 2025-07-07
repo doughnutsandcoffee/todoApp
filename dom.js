@@ -10,9 +10,9 @@ import { writeToLocalStorage } from "./storage.js";
  */
 
 export const DOM = {
-    formContainer: document.querySelector(".form-container"),               /** @type {HTMLElement} Container for todo form tag. */
+    formContainer: document.querySelector(".form-container"),              /** @type {HTMLElement} Container for todo form tag. */
     todoInput: document.getElementById("todo-input"),                      /** @type {HTMLInputElement} Input field for todo text. */
-    todoListContainer : document.getElementById("todo-list-container"),     /** @type {HTMLElement} Unordered list element for todo items. */
+    todoListContainer : document.getElementById("todo-list-container"),    /** @type {HTMLElement} Unordered list element for todo items. */
 }
 
 /**
@@ -58,13 +58,12 @@ export function buildTodo(userInput){
     deleteButton.id = `delete-btn-${timestamp}`;
     deleteButton.classList.add("delete-button");
     deleteButton.ariaLabel = "Delete";
-
+    
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
 
-    internallyStoreTodo(todoText.textContent, timestamp); // internal array updated
+    internallyStoreTodo(timestamp, todoText.textContent, checkboxInput.checked); // internal array updated
     writeToLocalStorage();
-
     DOM.formContainer.reset(); // reset form elements to default values: input, button
 }
 
@@ -84,7 +83,7 @@ export function renderTodo(todo) {
     checkboxInput.id = `todo-${todo.id}`;
     checkboxInput.classList.add("text-input");
     checkboxInput.type = "checkbox";
-    checkboxInput.checked = todo.checkboxState; // Reflect stored state
+    checkboxInput.checked = todo.checkboxState; // gets state checked or unchecked
 
     // Create <label class="custom-checkbox" for="todo-[id]"><img src="images/check.svg" alt="checkbox"></label>
     let checkboxLabel = document.createElement("label");
@@ -113,4 +112,9 @@ export function renderTodo(todo) {
 
     li.append(checkboxInput, checkboxLabel, textLabel, deleteButton);
     DOM.todoListContainer.appendChild(li);
+
+    // ADDED JULY 7th we did't store todo we loaded from storage and then created ... somehow todosArray is empty
+    // seemed to fix this issue w/todo's dissapearing
+    internallyStoreTodo(todo.id, todo.text, todo.checkboxState); 
+    //writeToLocalStorage();
 }

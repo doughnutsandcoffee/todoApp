@@ -1,7 +1,7 @@
 /** @module Event handling for Todo application */
 
 import { DOM, buildTodo } from "./dom.js";
-import {internallyRemoveTodo } from "./state.js";
+import {internallyRemoveTodo, todosArray } from "./state.js";
 import { writeToLocalStorage } from "./storage.js";
 
 /**
@@ -28,12 +28,25 @@ export function handleAdd() {
 }
 
 /**
- * @param {} xxxx - 
- * @param {ClickEvent} e -
+ * Update state of checkbox associated with parent li id 
+ * @param {ClickEvent} e - change event
  * @returns {void} -
  */
-export function handleCheckbox(){
-    console.log("handleCheckbox() called.")
+export function handleCheckbox() {
+    DOM.todoListContainer.addEventListener("change", (e) => {
+
+        // filter for change event of type checkbox, get id of li "todo", use id to get parent/todo, update Checkbox state/localStorage
+        if (e.target.type === "checkbox") {
+            // state.js id is saved as a string BUT Date.now() creates id as a number -> convert to text `${}`
+            const targetID = e.target.closest("li").id;
+            const todo = todosArray.find(todo => todo.id === `${targetID}`); 
+            //console.log("todo:", todo);
+            if (todo) {
+                todo.checkboxState = e.target.checked;
+                writeToLocalStorage();
+            }
+        }
+    });
 }
 
 /**
@@ -42,7 +55,7 @@ export function handleCheckbox(){
  * @returns {void}
  */
 export function handleDelete(){
-
+    console.log("handleDelete():");
     DOM.todoListContainer.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-button")) { // e.target is actual html element "clicked"
             // 1. get parent id to, remove from array

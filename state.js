@@ -5,15 +5,16 @@ export let todosArray = [];
 
 /**
  * Update internal todosArray by pushing an object with the id, text, and checkboxState of user's most recently added todo
- * @param { string } todoText - The user-entered todo text.
  * @param { string } timestamp - Timestamp todo originally created at.
+ * @param { string } todoText - The user-entered todo text.
+ * @param { boolean } state - The initial state of the checkbox.
  * @returns {void}
  */
-export function internallyStoreTodo(todoText, timestamp){
+export function internallyStoreTodo(timestamp, todoText, state){
     const todo = {
         "id" : `${timestamp}`, // added id to li ... match
         "text" : todoText,
-        "checkboxState" : false,
+        "checkboxState" : state,
     }
     todosArray.push(todo);
 }
